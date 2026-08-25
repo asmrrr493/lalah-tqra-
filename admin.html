@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>لوحة إدارة المنصة</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Tahoma, sans-serif;
+    background: #0b0f14;
+    color: #ffffff;
+}
+
+header {
+    background: #111820;
+    padding: 18px;
+    border-bottom: 1px solid #26313d;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-content {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.admin-name {
+    color: #9aa7b5;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.logout-btn {
+    background: #252f3a;
+    color: white;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.welcome {
+    background: #111820;
+    border: 1px solid #26313d;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.welcome h1 {
+    margin: 0 0 8px;
+    font-size: 25px;
+}
+
+.welcome p {
+    margin: 0;
+    color: #9aa7b5;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: #111820;
+    border: 1px solid #26313d;
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.stat-title {
+    color: #9aa7b5;
+    font-size: 14px;
+}
+
+.stat-number {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.panel {
+    background: #111820;
+    border: 1px solid #26313d;
+    border-radius: 16px;
+    padding: 18px;
+}
+
+.panel-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.search-box {
+    width: 100%;
+    background: #0b0f14;
+    color: white;
+    border: 1px solid #34404d;
+    border-radius: 10px;
+    padding: 13px;
+    font-size: 15px;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+.student-card {
+    border: 1px solid #293541;
+    background: #0d131a;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.student-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+
+.student-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.student-id {
+    color: #687584;
+    font-size: 11px;
+    margin-top: 5px;
+    direction: ltr;
+    text-align: right;
+}
+
+.status {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.active {
+    background: #123d2b;
+    color: #55d99a;
+}
+
+.inactive {
+    background: #422020;
+    color: #ff7777;
+}
+
+.student-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.info-box {
+    background: #151d26;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.info-label {
+    color: #7d8996;
+    font-size: 12px;
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.actions button {
+    color: white;
+}
+
+.add-btn {
+    background: #137a4b;
+}
+
+.remove-btn {
+    background: #9b3838;
+}
+
+.level-btn {
+    background: #315f9c;
+}
+
+.toggle-btn {
+    background: #5b4b8a;
+}
+
+.loading {
+    text-align: center;
+    color: #9aa7b5;
+    padding: 30px;
+}
+
+.error {
+    background: #421f1f;
+    color: #ff9c9c;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+@media (max-width: 700px) {
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .student-info {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .student-top {
+        align-items: flex-start;
+    }
+
+    .actions {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .container {
+        padding: 12px;
+    }
+
+    .welcome h1 {
+        font-size: 21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-content">
+        <div>
+            <div class="logo">📚 منصة لالح تقرأ</div>
+            <div class="admin-name" id="adminName">جاري التحقق...</div>
+        </div>
+
+        <button class="logout-btn" onclick="logout()">
+            تسجيل الخروج
+        </button>
+    </div>
+</header>
+
+<div class="container">
+
+    <div id="errorBox" class="error"></div>
+
+    <div class="welcome">
+        <h1>لوحة إدارة المنصة 👑</h1>
+        <p>
+            من هنا يمكنك إدارة الطلاب والأرصدة والمستويات وحالة الحسابات.
+        </p>
+    </div>
+
+    <div class="stats">
+
+        <div class="stat">
+            <div class="stat-title">إجمالي الطلاب</div>
+            <div class="stat-number" id="totalStudents">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-title">الحسابات النشطة</div>
+            <div class="stat-number" id="activeStudents">0</div>
+        </div>
+
+        <div class="stat">
+            <div class="stat-title">إجمالي الأرصدة</div>
+            <div class="stat-number" id="totalBalance">0</div>
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <div class="panel-title">
+            👩‍🎓 إدارة الطلاب
+        </div>
+
+        <input
+            type="text"
+            id="searchInput"
+            class="search-box"
+            placeholder="🔎 البحث عن طالب..."
+            oninput="filterStudents()"
+        >
+
+        <div id="studentsList">
+            <div class="loading">
+                جاري تحميل الطلاب...
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+const SUPABASE_URL = "https://ibemugykdntnafldubcx.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_qEsyKXRMJ2U3JrBmIOxJbw_UaO_xjs6";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+let students = [];
+
+function showError(message) {
+    const box = document.getElementById("errorBox");
+    box.textContent = message;
+    box.style.display = "block";
+}
+
+function hideError() {
+    document.getElementById("errorBox").style.display = "none";
+}
+
+async function checkAdmin() {
+    <script>
+/* ================================
+   SUPABASE
+================================ */
+
+const SUPABASE_URL =
+  "https://ibemugykdntnafldubcx.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_qEsyKXRMJ2U3JrBmIOxJbw_UaO_xjs6";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* ================================
+   عناصر الصفحة
+================================ */
+
+const studentsTable =
+  document.getElementById("studentsTable");
+
+const message =
+  document.getElementById("message");
+
+const loading =
+  document.getElementById("loading");
+
+const logoutBtn =
+  document.getElementById("logoutBtn");
+
+
+/* ================================
+   رسالة
+================================ */
+
+function showMessage(text, type = "success") {
+  if (!message) return;
+
+  message.textContent = text;
+  message.className = "message " + type;
+
+  setTimeout(() => {
+    message.textContent = "";
+    message.className = "message";
+  }, 4000);
+}
+
+
+/* ================================
+   التحقق من الأدمن
+================================ */
+
+async function checkAdmin() {
+
+  const {
+    data: { user },
+    error
+  } = await supabaseClient.auth.getUser();
+
+  if (error || !user) {
+    window.location.href = "index.html";
+    return null;
+  }
+
+  const { data: profile, error: profileError } =
+    await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
+
+  if (
+    profileError ||
+    !profile ||
+    profile.role !== "admin"
+  ) {
+    alert("ليس لديك صلاحية دخول إلى لوحة الإدارة.");
+    await supabaseClient.auth.signOut();
+    window.location.href = "index.html";
+    return null;
+  }
+
+  return profile;
+}
+
+
+/* ================================
+   تحميل الطلاب
+================================ */
+
+async function loadStudents() {
+
+  if (loading) {
+    loading.style.display = "block";
+  }
+
+  const { data, error } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "id, full_name, role, level, balance, is_active"
+      )
+      .order("full_name", {
+        ascending: true
+      });
+
+  if (loading) {
+    loading.style.display = "none";
+  }
+
+  if (error) {
+    console.error(error);
+    showMessage(
+      "حدث خطأ أثناء تحميل الطلاب",
+      "error"
+    );
+    return;
+  }
+
+  renderStudents(data || []);
+}
+
+
+/* ================================
+   عرض الطلاب
+================================ */
+
+function renderStudents(students) {
+
+  if (!studentsTable) return;
+
+  studentsTable.innerHTML = "";
+
+  if (students.length === 0) {
+
+    studentsTable.innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align:center">
+          لا يوجد طلاب حاليًا
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+
+  students.forEach(student => {
+
+    const tr = document.createElement("tr");
+
+    const activeText =
+      student.is_active
+        ? "نشط"
+        : "متوقف";
+
+    const activeClass =
+      student.is_active
+        ? "active"
+        : "inactive";
+
+
+    tr.innerHTML = `
+
+      <td>
+        ${escapeHtml(student.full_name || "بدون اسم")}
+      </td>
+
+      <td>
+        <select
+          class="level-select"
+          data-id="${student.id}"
+        >
+          <option value="مبتدئ"
+            ${student.level === "مبتدئ" ? "selected" : ""}>
+            مبتدئ
+          </option>
+
+          <option value="متوسط"
+            ${student.level === "متوسط" ? "selected" : ""}>
+            متوسط
+          </option>
+
+          <option value="متقدم"
+            ${student.level === "متقدم" ? "selected" : ""}>
+            متقدم
+          </option>
+
+          <option value="إدارة"
+            ${student.level === "إدارة" ? "selected" : ""}>
+            إدارة
+          </option>
+        </select>
+      </td>
+
+
+      <td>
+        <div class="balance-box">
+
+          <input
+            type="number"
+            min="0"
+            value="${Number(student.balance) || 0}"
+            class="balance-input"
+            data-id="${student.id}"
+          >
+
+          <button
+            class="save-balance"
+            data-id="${student.id}"
+          >
+            حفظ
+          </button>
+
+        </div>
+      </td>
+
+
+      <td>
+        <span class="status ${activeClass}">
+          ${activeText}
+        </span>
+      </td>
+
+
+      <td>
+
+        <button
+          class="toggle-user"
+          data-id="${student.id}"
+          data-active="${student.is_active}"
+        >
+          ${student.is_active
+            ? "تعطيل"
+            : "تفعيل"}
+        </button>
+
+      </td>
+
+
+      <td>
+
+        <button
+          class="delete-user"
+          data-id="${student.id}"
+        >
+          حذف الملف
+        </button>
+
+      </td>
+    `;
+
+    studentsTable.appendChild(tr);
+  });
+
+
+  /* تغيير المستوى */
+
+  document
+    .querySelectorAll(".level-select")
+    .forEach(select => {
+
+      select.addEventListener("change", async function () {
+
+        const id = this.dataset.id;
+        const level = this.value;
+
+        const { error } =
+          await supabaseClient
+            .from("profiles")
+            .update({
+              level: level
+            })
+            .eq("id", id);
+
+        if (error) {
+
+          console.error(error);
+
+          showMessage(
+            "تعذر تحديث المستوى",
+            "error"
+          );
+
+          return;
+        }
+
+        showMessage(
+          "تم تحديث مستوى الطالب بنجاح"
+        );
+      });
+    });
+
+
+  /* حفظ الرصيد */
+
+  document
+    .querySelectorAll(".save-balance")
+    .forEach(button => {
+
+      button.addEventListener("click", async function () {
+
+        const id = this.dataset.id;
+
+        const input =
+          document.querySelector(
+            `.balance-input[data-id="${id}"]`
+          );
+
+        const balance =
+          parseInt(input.value, 10);
+
+
+        if (
+          isNaN(balance) ||
+          balance < 0
+        ) {
+
+          showMessage(
+            "أدخل رصيدًا صحيحًا",
+            "error"
+          );
+
+          return;
+        }
+
+
+        const { error } =
+          await supabaseClient
+            .from("profiles")
+            .update({
+              balance: balance
+            })
+            .eq("id", id);
+
+
+        if (error) {
+
+          console.error(error);
+
+          showMessage(
+            "تعذر تحديث الرصيد",
+            "error"
+          );
+
+          return;
+        }
+
+
+        showMessage(
+          "تم تحديث الرصيد بنجاح"
+        );
+      });
+    });
+
+
+  /* تفعيل / تعطيل */
+
+  document
+    .querySelectorAll(".toggle-user")
+    .forEach(button => {
+
+      button.addEventListener("click", async function () {
+
+        const id = this.dataset.id;
+
+        const current =
+          this.dataset.active === "true";
+
+        const newStatus = !current;
+
+
+        const { error } =
+          await supabaseClient
+            .from("profiles")
+            .update({
+              is_active: newStatus
+            })
+            .eq("id", id);
+
+
+        if (error) {
+
+          console.error(error);
+
+          showMessage(
+            "تعذر تغيير حالة الحساب",
+            "error"
+          );
+
+          return;
+        }
+
+
+        showMessage(
+          newStatus
+            ? "تم تفعيل الحساب"
+            : "تم تعطيل الحساب"
+        );
+
+
+        loadStudents();
+      });
+    });
+
+
+  /* حذف ملف الطالب */
+
+  document
+    .querySelectorAll(".delete-user")
+    .forEach(button => {
+
+      button.addEventListener("click", async function () {
+
+        const id = this.dataset.id;
+
+
+        const confirmed =
+          confirm(
+            "هل أنت متأكد من حذف ملف هذا الطالب؟"
+          );
+
+
+        if (!confirmed) return;
+
+
+        const { error } =
+          await supabaseClient
+            .from("profiles")
+            .delete()
+            .eq("id", id);
+
+
+        if (error) {
+
+          console.error(error);
+
+          showMessage(
+            "تعذر حذف الملف",
+            "error"
+          );
+
+          return;
+        }
+
+
+        showMessage(
+          "تم حذف ملف الطالب"
+        );
+
+
+        loadStudents();
+      });
+    });
+}
+
+
+/* ================================
+   حماية النصوص
+================================ */
+
+function escapeHtml(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+}
+
+
+/* ================================
+   تسجيل الخروج
+================================ */
+
+if (logoutBtn) {
+
+  logoutBtn.addEventListener(
+    "click",
+    async () => {
+
+      await supabaseClient.auth.signOut();
+
+      window.location.href =
+        "index.html";
+    }
+  );
+}
+
+
+/* ================================
+   تشغيل اللوحة
+================================ */
+
+async function startAdminPanel() {
+
+  const admin =
+    await checkAdmin();
+
+  if (!admin) return;
+
+  loadStudents();
+}
+
+
+startAdminPanel();
+
+
+/* ================================
+   تحديث تلقائي
+================================ */
+
+setInterval(() => {
+
+  loadStudents();
+
+}, 30000);
+
+</script>
+
+</body>
+</html>
+}
