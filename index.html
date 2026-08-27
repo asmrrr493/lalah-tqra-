@@ -1,1 +1,116 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة التداول </title>
+    <!-- Chart.js للمخططات البيانية -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root { --bg-color: #121721; --card-bg: #1e232d; --text: #ffffff; --green: #0ecb81; --red: #f6465d; }
+        body { font-family: system-ui, sans-serif; background: var(--bg-color); color: var(--text); margin: 0; padding: 20px; }
+        .container { display: grid; grid-template-columns: 3fr 1fr; gap: 20px; }
+        .card { background: var(--card-bg); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .flex { display: flex; justify-content: space-between; align-items: center; }
+        button { background: #f0b90b; border: none; padding: 10px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        input, select { background: #2b313a; border: 1px solid #474d57; color: white; padding: 8px; border-radius: 4px; width: 100%; box-sizing: border-box; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; text-align: right; }
+        th, td { padding: 10px; border-bottom: 1px solid #2b313a; }
+        .green { color: var(--green); } .red { color: var(--red); }
+    </style>
+</head>
+<body>
 
+    <h2 class="flex">منصة التداول  <span>الرصيد: $<span id="user-balance">10000</span></span></h2>
+
+    <div class="container">
+        <!-- منطقة الشارت والأسعار -->
+        <div>
+            <div class="card">
+                <div class="flex">
+                    <h3>شارت BTC/USDT</h3>
+                    <h3 id="btc-price" class="green">$50,000.00</h3>
+                </div>
+                <canvas id="cryptoChart" height="120"></canvas>
+            </div>
+
+            <!--لوحة الإيداع والسحب  -->
+            <div class="card">
+                <h3>المحفظة (إيداع وسحب )</h3>
+                <div style="display: flex; gap: 10px;">
+                    <input type="number" id="wallet-amount" placeholder="المبلغ دولار">
+                    <button onclick="updateWallet('deposit')">إيداع</button>
+                    <button onclick="updateWallet('withdraw')" style="background:var(--red); color:white;">سحب</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- الشريط الجانبي: لوحة تحكم المسؤول (الأدمن) -->
+        <div>
+            <div class="card" style="border: 1px solid #f0b90b;">
+                <h3>👑 لوحة تحكم المعلم (الأدمن)</h3>
+                <label>التحكم بسعر BTC :</label>
+                <input type="number" id="admin-btc-input" value="50000">
+                <button onclick="setCustomPrice()" style="width: 100%;">تعديل السعر الآن</button>
+
+                <hr style="border-color: #2b313a; margin: 15px 0;">
+
+                <label>تعديل رصيد الطالب المحدد:</label>
+                <input type="number" id="admin-balance-input" placeholder="الرصيد الجديد">
+                <button onclick="setCustomBalance()" style="width: 100%;">تعديل الرصيد</button>
+            </div>
+
+            <!-- قائمة المستخدمين للقيام بالمتابعة -->
+            <div class="card">
+                <h3>قائمة المستخدمين والاشتراكات</h3>
+                <table>
+                    <tr><th>الطالب</th><th>الاشتراك</th></tr>
+                    <tr><td>ahmed@test.com</td><td><span class="green">30 يوم</span></td></tr>
+                    <tr><td>sara@test.com</td><td><span class="red">منتهي</span></td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // إعدادات الشارت 
+        let currentPrice = 50000;
+        let userBalance = 10000;
+        const ctx = document.getElementById('cryptoChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['10:00', '10:05', '10:10', '10:15', '10:20', '10:25'],
+                datasets: [{ label: 'BTC/USDT', data: [49500, 49800, 49700, 50100, 49900, 50000], borderColor: '#0ecb81', fill: false }]
+            }
+        });
+
+        // التحكم بسعر الشارت
+        function setCustomPrice() {
+            let newPrice = parseFloat(document.getElementById('admin-btc-input').value);
+            currentPrice = newPrice;
+            document.getElementById('btc-price').innerText = '$' + newPrice.toFixed(2);
+            chart.data.datasets[0].data.push(newPrice);
+            chart.data.datasets[0].data.shift();
+            chart.update();
+        }
+
+        // السحب والإيداع 
+        function updateWallet(type) {
+            let amount = parseFloat(document.getElementById('wallet-amount').value);
+            if(!amount) return;
+            if(type === 'deposit') userBalance += amount;
+            if(type === 'withdraw' && amount <= userBalance) userBalance -= amount;
+            document.getElementById('user-balance').innerText = userBalance.toFixed(2);
+        }
+
+        // تعديل رصيد الطالب من الأدمن
+        function setCustomBalance() {
+            let newBal = parseFloat(document.getElementById('admin-balance-input').value);
+            if(!newBal) return;
+            userBalance = newBal;
+            document.getElementById('user-balance').innerText = userBalance.toFixed(2);
+        }
+    </script>
+</body>
+</html>
