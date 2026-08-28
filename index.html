@@ -1,509 +1,620 @@
-<!-- السطر 1 -->
 <!DOCTYPE html>
-<!-- السطر 2 -->
 <html lang="ar" dir="rtl">
-<!-- السطر 3 -->
 <head>
-<!-- السطر 4 -->
 <meta charset="UTF-8">
-<!-- السطر 5 -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- السطر 6 -->
-<title>TradeLab</title>
-<!-- السطر 7 -->
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>TradeLab | منصة التدريب</title>
 <style>
-<!-- السطر 8 -->
-*{box-sizing:border-box;margin:0;padding:0}
-<!-- السطر 9 -->
-body{font-family:Arial,sans-serif;background:#f4f7fb;color:#172033;min-height:100vh}
-<!-- السطر 10 -->
-.container{width:100%;max-width:1100px;margin:auto;padding:20px}
-<!-- السطر 11 -->
-.card{background:white;border-radius:18px;padding:25px;box-shadow:0 5px 25px rgba(0,0,0,.08);margin-bottom:20px}
-<!-- السطر 12 -->
-h1,h2,h3{margin-bottom:15px}
-<!-- السطر 13 -->
-.logo{text-align:center;font-size:32px;font-weight:bold;color:#1769e0;margin:20px 0}
-<!-- السطر 14 -->
-input,select{width:100%;padding:13px;margin:7px 0 12px;border:1px solid #d5dbe5;border-radius:10px;font-size:16px}
-<!-- السطر 15 -->
-button{width:100%;padding:13px;border:0;border-radius:10px;background:#1769e0;color:white;font-size:16px;font-weight:bold;cursor:pointer;margin-top:8px}
-<!-- السطر 16 -->
-button:hover{opacity:.9}
-<!-- السطر 17 -->
-.secondary{background:#64748b}
-<!-- السطر 18 -->
-.danger{background:#dc2626}
-<!-- السطر 19 -->
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Tahoma,sans-serif;background:#f5f7fb;color:#172033}
+button,input{font-family:inherit}
+.app{width:100%;min-height:100vh}
+.topbar{height:70px;background:#fff;border-bottom:1px solid #e7ebf2;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:10}
+.brand{font-size:25px;font-weight:800;color:#1769e0}
+.brand span{color:#172033}
+.top-user{font-size:14px;color:#64748b}
+.page{max-width:1100px;margin:auto;padding:25px 18px}
+.auth-wrap{min-height:calc(100vh - 70px);display:flex;align-items:center;justify-content:center}
+.auth-card{width:100%;max-width:430px;background:#fff;border-radius:24px;padding:30px;box-shadow:0 12px 40px rgba(23,32,51,.09)}
+.auth-logo{text-align:center;font-size:38px;font-weight:900;color:#1769e0;margin-bottom:8px}
+.auth-sub{text-align:center;color:#64748b;margin-bottom:25px}
+.auth-card h2{text-align:center;margin:0 0 22px;font-size:25px}
+.field{margin-bottom:15px}
+.field label{display:block;margin-bottom:7px;font-weight:700;font-size:14px}
+.field input{width:100%;height:50px;border:1px solid #d9e0ea;border-radius:12px;padding:0 15px;font-size:16px;outline:none;background:#fff}
+.field input:focus{border-color:#1769e0;box-shadow:0 0 0 3px rgba(23,105,224,.1)}
+.btn{width:100%;height:50px;border:0;border-radius:12px;background:#1769e0;color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+.btn.secondary{background:#eef3fa;color:#1769e0;margin-top:10px}
+.btn.danger{background:#dc3545}
+.message{padding:12px;border-radius:10px;margin-bottom:15px;font-size:14px;text-align:center}
+.message.error{background:#fee2e2;color:#991b1b}
+.message.success{background:#dcfce7;color:#166534}
 .hidden{display:none!important}
-<!-- السطر 20 -->
-.error{background:#fee2e2;color:#991b1b;padding:12px;border-radius:10px;margin:10px 0}
-<!-- السطر 21 -->
-.success{background:#dcfce7;color:#166534;padding:12px;border-radius:10px;margin:10px 0}
-<!-- السطر 22 -->
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-<!-- السطر 23 -->
-.stat{background:#f8fafc;border-radius:14px;padding:20px;text-align:center}
-<!-- السطر 24 -->
-.stat strong{display:block;font-size:25px;color:#1769e0;margin-top:8px}
-<!-- السطر 25 -->
-table{width:100%;border-collapse:collapse;margin-top:15px}
-<!-- السطر 26 -->
-th,td{padding:12px;border-bottom:1px solid #e5e7eb;text-align:center}
-<!-- السطر 27 -->
-th{background:#f1f5f9}
-<!-- السطر 28 -->
-.badge{padding:5px 10px;border-radius:20px;background:#dcfce7;color:#166534}
-<!-- السطر 29 -->
+.dashboard-title{margin-bottom:22px}
+.dashboard-title h1{margin:0 0 7px;font-size:30px}
+.dashboard-title p{margin:0;color:#64748b}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stat-card{background:#fff;border-radius:18px;padding:22px;box-shadow:0 6px 25px rgba(23,32,51,.06)}
+.stat-label{color:#64748b;font-size:14px;margin-bottom:10px}
+.stat-value{font-size:28px;font-weight:800;color:#1769e0}
+.panel{background:#fff;border-radius:20px;padding:22px;margin-top:18px;box-shadow:0 6px 25px rgba(23,32,51,.06)}
+.panel h2{margin:0 0 18px;font-size:21px}
+.profile-line{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #edf0f5}
+.profile-line:last-child{border-bottom:0}
+.profile-label{color:#64748b}
+.market{display:flex;align-items:center;justify-content:space-between;background:#111827;color:#fff;border-radius:18px;padding:22px}
+.market-name{font-size:18px;font-weight:700}
+.market-price{font-size:28px;font-weight:800;margin-top:8px}
+.market-note{color:#cbd5e1;font-size:13px;margin-top:6px}
+.admin-head{display:flex;justify-content:space-between;align-items:center;gap:15px}
+.admin-head .btn{width:auto;padding:0 20px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+th,td{padding:12px;border-bottom:1px solid #e8ecf2;text-align:center}
+th{background:#f5f7fb;color:#475569}
+td input{width:100%;padding:9px;border:1px solid #d9e0ea;border-radius:8px}
+.small-btn{width:auto!important;height:38px!important;padding:0 14px!important;font-size:13px!important}
+.badge{display:inline-block;padding:5px 10px;border-radius:20px;background:#dcfce7;color:#166534;font-size:12px}
+.empty{text-align:center;color:#64748b;padding:25px}
+.loading{text-align:center;padding:25px;color:#64748b}
 @media(max-width:700px){
-<!-- السطر 30 -->
-.stats{grid-template-columns:1fr}
-<!-- السطر 31 -->
-table{font-size:12px}
-<!-- السطر 32 -->
-th,td{padding:7px}
-<!-- السطر 33 -->
+.topbar{padding:0 14px}
+.brand{font-size:21px}
+.top-user{font-size:12px}
+.page{padding:18px 12px}
+.auth-card{padding:22px 18px}
+.grid{grid-template-columns:1fr}
+.dashboard-title h1{font-size:25px}
+.market{display:block}
+.market-price{font-size:25px}
+.admin-head{display:block}
+.admin-head .btn{width:100%;margin-top:12px}
 }
-<!-- السطر 34 -->
 </style>
-<!-- السطر 35 -->
 </head>
-<!-- السطر 36 -->
 <body>
-<!-- السطر 37 -->
-<div class="container">
-<!-- السطر 38 -->
-<div class="logo">TradeLab 📈</div>
-<!-- السطر 39 -->
-<div id="message"></div>
-<!-- السطر 40 -->
 
-<!-- السطر 41 -->
-<div id="authSection" class="card">
-<!-- السطر 42 -->
+<div class="app">
+
+<header class="topbar">
+<div class="brand">Trade<span>Lab</span> 📈</div>
+<div id="topUser" class="top-user"></div>
+</header>
+
+<div id="messageBox"></div>
+
+<section id="authSection" class="auth-wrap">
+<div class="auth-card">
+
+<div class="auth-logo">TradeLab</div>
+<div class="auth-sub">منصة التدريب على التداول</div>
+
 <h2 id="authTitle">تسجيل الدخول</h2>
-<!-- السطر 43 -->
 
+<div id="nameField" class="field hidden">
+<label>الاسم</label>
+<input id="nameInput" type="text" placeholder="اكتب اسمك">
+</div>
+
+<div class="field">
 <label>البريد الإلكتروني</label>
-<!-- السطر 44 -->
-<input id="email" type="email" placeholder="example@email.com">
-<!-- السطر 45 -->
+<input id="emailInput" type="email" placeholder="example@email.com">
+</div>
 
+<div class="field">
 <label>كلمة المرور</label>
-<!-- السطر 46 -->
-<input id="password" type="password" placeholder="كلمة المرور">
-<!-- السطر 47 -->
-
-<label id="nameLabel" class="hidden">الاسم</label>
-<!-- السطر 48 -->
-<input id="name" class="hidden" type="text" placeholder="اسم الطالب">
-<!-- السطر 49 -->
-
-<label id="inviteLabel" class="hidden">كود الدعوة</label>
-<!-- السطر 50 -->
-<input id="inviteCode" class="hidden" type="text" placeholder="أدخل كود الدعوة">
-<!-- السطر 51 -->
-
-<button id="mainAuthBtn">تسجيل الدخول</button>
-<!-- السطر 52 -->
-<button id="switchBtn" class="secondary">إنشاء حساب جديد</button>
-<!-- السطر 53 -->
+<input id="passwordInput" type="password" placeholder="كلمة المرور">
 </div>
-<!-- السطر 54 -->
 
-<!-- السطر 55 -->
-<div id="studentSection" class="hidden">
-<!-- السطر 56 -->
-<div class="card">
-<!-- السطر 57 -->
-<h2>لوحة الطالب 🎓</h2>
-<!-- السطر 58 -->
-<p>مرحباً <strong id="studentName">-</strong></p>
-<!-- السطر 59 -->
-<p id="studentEmail">-</p>
-<!-- السطر 60 -->
+<div id="inviteField" class="field hidden">
+<label>كود الدعوة</label>
+<input id="inviteInput" type="text" placeholder="أدخل كود الدعوة">
 </div>
-<!-- السطر 61 -->
 
-<!-- السطر 62 -->
-<div class="stats">
-<!-- السطر 63 -->
-<div class="stat">
-<!-- السطر 64 -->
-الرصيد
-<!-- السطر 65 -->
-<strong id="studentBalance">0</strong>
-<!-- السطر 66 -->
-</div>
-<!-- السطر 67 -->
+<button id="authButton" class="btn">تسجيل الدخول</button>
+<button id="switchButton" class="btn secondary">إنشاء حساب جديد</button>
 
-<!-- السطر 68 -->
-<div class="stat">
-<!-- السطر 69 -->
-المستوى
-<!-- السطر 70 -->
-<strong id="studentLevel">-</strong>
-<!-- السطر 71 -->
 </div>
-<!-- السطر 72 -->
+</section>
 
-<!-- السطر 73 -->
-<div class="stat">
-<!-- السطر 74 -->
-الصفقات
-<!-- السطر 75 -->
-<strong id="studentTrades">0</strong>
-<!-- السطر 76 -->
-</div>
-<!-- السطر 77 -->
-</div>
-<!-- السطر 78 -->
+<section id="studentSection" class="hidden">
+<div class="page">
 
-<!-- السطر 79 -->
-<div class="card">
-<!-- السطر 80 -->
-<h3>سوق التدريب 📊</h3>
-<!-- السطر 81 -->
-<p>BTC / USD</p>
-<!-- السطر 82 -->
-<h2 id="btcPrice">65,000.00</h2>
-<!-- السطر 83 -->
-<p>السعر تجريبي للتدريب فقط</p>
-<!-- السطر 84 -->
+<div class="dashboard-title">
+<h1>لوحة الطالب 🎓</h1>
+<p>مرحبًا بك في منصة TradeLab للتدريب</p>
 </div>
-<!-- السطر 85 -->
 
-<!-- السطر 86 -->
-<div class="card">
-<!-- السطر 87 -->
-<button id="logoutStudent" class="danger">تسجيل الخروج</button>
-<!-- السطر 88 -->
-</div>
-<!-- السطر 89 -->
-</div>
-<!-- السطر 90 -->
+<div class="grid">
 
-<!-- السطر 91 -->
-<div id="adminSection" class="hidden">
-<!-- السطر 92 -->
-<div class="card">
-<!-- السطر 93 -->
-<h2>لوحة تحكم المدير 👑</h2>
-<!-- السطر 94 -->
-<p>من هنا تستطيع التحكم بالطلاب والأرصدة والمستويات.</p>
-<!-- السطر 95 -->
+<div class="stat-card">
+<div class="stat-label">الرصيد</div>
+<div id="studentBalance" class="stat-value">0</div>
 </div>
-<!-- السطر 96 -->
 
-<!-- السطر 97 -->
-<div class="stats">
-<!-- السطر 98 -->
-<div class="stat">
-الطلاب
-<strong id="totalStudents">0</strong>
+<div class="stat-card">
+<div class="stat-label">المستوى</div>
+<div id="studentLevel" class="stat-value">مبتدئ</div>
 </div>
-<!-- السطر 99 -->
 
-<div class="stat">
-إجمالي الأرصدة
-<strong id="totalBalance">0</strong>
+<div class="stat-card">
+<div class="stat-label">عدد الصفقات</div>
+<div id="studentTrades" class="stat-value">0</div>
 </div>
-<!-- السطر 100 -->
 
-<div class="stat">
-الحالة
-<strong>نشطة</strong>
 </div>
-<!-- السطر 101 -->
-</div>
-<!-- السطر 102 -->
 
-<!-- السطر 103 -->
-<div class="card">
-<!-- السطر 104 -->
-<h3>إدارة الطلاب</h3>
-<!-- السطر 105 -->
-<div style="overflow-x:auto">
-<!-- السطر 106 -->
-<table>
-<!-- السطر 107 -->
+<div class="panel">
+<h2>بيانات الحساب</h2>
+
+<div class="profile-line">
+<span class="profile-label">الاسم</span>
+<strong id="studentName">-</strong>
+</div>
+
+<div class="profile-line">
+<span class="profile-label">البريد الإلكتروني</span>
+<strong id="studentEmail">-</strong>
+</div>
+
+<div class="profile-line">
+<span class="profile-label">الحالة</span>
+<span class="badge">نشط</span>
+</div>
+
+</div>
+
+<div class="panel">
+<h2>سوق التدريب 📊</h2>
+
+<div class="market">
+<div>
+<div class="market-name">BTC / USD</div>
+<div class="market-note">السعر تجريبي للتدريب فقط</div>
+</div>
+<div id="btcPrice" class="market-price">65,000.00</div>
+</div>
+
+</div>
+
+<div class="panel">
+<button id="studentLogout" class="btn danger">تسجيل الخروج</button>
+</div>
+
+</div>
+</section>
+
+<section id="adminSection" class="hidden">
+<div class="page">
+
+<div class="dashboard-title">
+<h1>لوحة تحكم المدير 👑</h1>
+<p>التحكم بالطلاب والأرصدة والمستويات</p>
+</div>
+
+<div class="grid">
+
+<div class="stat-card">
+<div class="stat-label">عدد الطلاب</div>
+<div id="totalStudents" class="stat-value">0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-label">إجمالي الأرصدة</div>
+<div id="totalBalance" class="stat-value">0</div>
+</div>
+
+<div class="stat-card">
+<div class="stat-label">حالة المنصة</div>
+<div class="stat-value">نشطة</div>
+</div>
+
+</div>
+
+<div class="panel">
+<div class="admin-head">
+<h2>إدارة الطلاب</h2>
+<button id="refreshStudents" class="btn">تحديث البيانات</button>
+</div>
+
+<div id="studentsLoading" class="loading">جاري تحميل الطلاب...</div>
+
+<div class="table-wrap">
+<table id="studentsTableContainer" class="hidden">
 <thead>
-<!-- السطر 108 -->
 <tr>
 <th>الاسم</th>
 <th>البريد</th>
 <th>الرصيد</th>
 <th>المستوى</th>
-<th>الدور</th>
+<th>الصفقات</th>
 <th>حفظ</th>
 </tr>
-<!-- السطر 109 -->
 </thead>
-<!-- السطر 110 -->
 <tbody id="studentsTable"></tbody>
-<!-- السطر 111 -->
 </table>
-<!-- السطر 112 -->
 </div>
-<!-- السطر 113 -->
-</div>
-<!-- السطر 114 -->
 
-<!-- السطر 115 -->
-<div class="card">
-<!-- السطر 116 -->
-<button id="logoutAdmin" class="danger">تسجيل الخروج</button>
-<!-- السطر 117 -->
+<div id="noStudents" class="empty hidden">لا يوجد طلاب حاليًا</div>
 </div>
-<!-- السطر 118 -->
-</div>
-<!-- السطر 119 -->
 
-<!-- السطر 120 -->
+<div class="panel">
+<button id="adminLogout" class="btn danger">تسجيل الخروج</button>
 </div>
-<!-- السطر 121 -->
 
-<!-- السطر 122 -->
+</div>
+</section>
+
+</div>
+
 <script type="module">
-<!-- السطر 123 -->
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-<!-- السطر 124 -->
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-<!-- السطر 125 -->
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc,
-  collection,
-  getDocs,
-  updateDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-<!-- السطر 126 -->
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import{getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import{getFirestore,collection,doc,setDoc,getDocs,query,where,updateDoc}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyA0kq7QBWRKYgv-0W2BEfkbI3vqLClfWI",
-  authDomain: "twer-pro.firebaseapp.com",
-  projectId: "twer-pro",
-  storageBucket: "twer-pro.firebasestorage.app",
-  messagingSenderId: "454562980143",
-  appId: "1:454562980143:web:47610adc655df1976e01da"
+const firebaseConfig={
+apiKey:"AIzaSyA0kq7QBWRKYgv-0W2BEfkbI3vqLClfWI",
+authDomain:"twer-pro.firebaseapp.com",
+projectId:"twer-pro",
+storageBucket:"twer-pro.firebasestorage.app",
+messagingSenderId:"454562980143",
+appId:"1:454562980143:web:47610adc655df1976e01da"
 };
-<!-- السطر 127 -->
 
-const app = initializeApp(firebaseConfig);
-<!-- السطر 128 -->
-const auth = getAuth(app);
-<!-- السطر 129 -->
-const db = getFirestore(app);
-<!-- السطر 130 -->
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-const authSection = document.getElementById("authSection");
-const studentSection = document.getElementById("studentSection");
-const adminSection = document.getElementById("adminSection");
-const message = document.getElementById("message");
-<!-- السطر 131 -->
+let loginMode=true;
+let currentProfileId=null;
 
-let loginMode = true;
-<!-- السطر 132 -->
+const authSection=document.getElementById("authSection");
+const studentSection=document.getElementById("studentSection");
+const adminSection=document.getElementById("adminSection");
+const messageBox=document.getElementById("messageBox");
 
-function showMessage(text,type="error"){
-  message.innerHTML = `<div class="${type}">${text}</div>`;
+function message(text,type="error"){
+messageBox.innerHTML='<div class="page"><div class="message '+type+'">'+text+'</div></div>';
+setTimeout(()=>messageBox.innerHTML="",4000);
 }
-<!-- السطر 133 -->
 
-document.getElementById("switchBtn").onclick = () => {
-  loginMode = !loginMode;
+function showOnly(section){
+authSection.classList.add("hidden");
+studentSection.classList.add("hidden");
+adminSection.classList.add("hidden");
+section.classList.remove("hidden");
+}
 
-  document.getElementById("authTitle").textContent =
-    loginMode ? "تسجيل الدخول" : "إنشاء حساب جديد";
+document.getElementById("switchButton").onclick=()=>{
+loginMode=!loginMode;
 
-  document.getElementById("mainAuthBtn").textContent =
-    loginMode ? "تسجيل الدخول" : "إنشاء الحساب";
+document.getElementById("authTitle").textContent=loginMode?"تسجيل الدخول":"إنشاء حساب جديد";
+document.getElementById("authButton").textContent=loginMode?"تسجيل الدخول":"إنشاء الحساب";
+document.getElementById("switchButton").textContent=loginMode?"إنشاء حساب جديد":"لدي حساب بالفعل";
 
-  document.getElementById("switchBtn").textContent =
-    loginMode ? "إنشاء حساب جديد" : "لدي حساب بالفعل";
-
-  document.getElementById("name").classList.toggle("hidden",loginMode);
-  document.getElementById("nameLabel").classList.toggle("hidden",loginMode);
-  document.getElementById("inviteCode").classList.toggle("hidden",loginMode);
-  document.getElementById("inviteLabel").classList.toggle("hidden",loginMode);
+document.getElementById("nameField").classList.toggle("hidden",loginMode);
+document.getElementById("inviteField").classList.toggle("hidden",loginMode);
 };
-<!-- السطر 134 -->
 
-document.getElementById("mainAuthBtn").onclick = async () => {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const name = document.getElementById("name").value.trim();
-  const inviteCode = document.getElementById("inviteCode").value.trim();
+document.getElementById("authButton").onclick=async()=>{
+const email=document.getElementById("emailInput").value.trim();
+const password=document.getElementById("passwordInput").value;
+const name=document.getElementById("nameInput").value.trim();
+const invite=document.getElementById("inviteInput").value.trim();
 
-  if(!email || !password){
-    showMessage("اكتب البريد الإلكتروني وكلمة المرور");
-    return;
-  }
+if(!email||!password){
+message("يرجى كتابة البريد الإلكتروني وكلمة المرور");
+return;
+}
 
-  try{
-    if(loginMode){
-      await signInWithEmailAndPassword(auth,email,password);
-    }else{
+try{
 
-      if(!name){
-        showMessage("اكتب اسمك");
-        return;
-      }
+if(loginMode){
 
-      if(inviteCode !== "TRADELAB2026"){
-        showMessage("كود الدعوة غير صحيح");
-        return;
-      }
+await signInWithEmailAndPassword(auth,email,password);
 
-      const result =
-        await createUserWithEmailAndPassword(auth,email,password);
+}else{
 
-      await setDoc(doc(db,"users",result.user.uid),{
-        name:name,
-        email:email,
-        balance:0,
-        level:"beginner",
-        trades:0,
-        role:"student"
-      });
+if(!name){
+message("يرجى كتابة الاسم");
+return;
+}
 
-      showMessage("تم إنشاء الحساب بنجاح","success");
-    }
-  }catch(error){
-    showMessage(error.message);
-  }
-};
-<!-- السطر 135 -->
+if(invite!=="12345"){
+message("كود الدعوة غير صحيح");
+return;
+}
 
-onAuthStateChanged(auth,async(user)=>{
-  if(!user){
-    authSection.classList.remove("hidden");
-    studentSection.classList.add("hidden");
-    adminSection.classList.add("hidden");
-    return;
-  }
+const result=await createUserWithEmailAndPassword(auth,email,password);
 
-  const userDoc = await getDoc(doc(db,"users",user.uid));
-
-  if(!userDoc.exists()){
-    showMessage("لم يتم العثور على بيانات الحساب");
-    return;
-  }
-
-  const data = userDoc.data();
-
-  authSection.classList.add("hidden");
-
-  if(data.role === "admin"){
-    adminSection.classList.remove("hidden");
-    studentSection.classList.add("hidden");
-    loadStudents();
-  }else{
-    studentSection.classList.remove("hidden");
-    adminSection.classList.add("hidden");
-
-    document.getElementById("studentName").textContent = data.name || "-";
-    document.getElementById("studentEmail").textContent = data.email || user.email;
-    document.getElementById("studentBalance").textContent = data.balance ?? 0;
-    document.getElementById("studentLevel").textContent = data.level || "-";
-    document.getElementById("studentTrades").textContent = data.trades ?? 0;
-  }
+await setDoc(doc(db,"users",result.user.uid),{
+name:name,
+email:email,
+balance:0,
+level:"beginner",
+trades:0,
+role:"student",
+is_active:true
 });
-<!-- السطر 136 -->
 
-document.getElementById("logoutStudent").onclick = () => signOut(auth);
-<!-- السطر 137 -->
-document.getElementById("logoutAdmin").onclick = () => signOut(auth);
-<!-- السطر 138 -->
+message("تم إنشاء الحساب بنجاح","success");
+
+}
+
+}catch(error){
+
+if(error.code==="auth/invalid-credential"){
+message("البريد الإلكتروني أو كلمة المرور غير صحيحة");
+}else if(error.code==="auth/email-already-in-use"){
+message("هذا البريد مسجل مسبقًا");
+}else if(error.code==="auth/weak-password"){
+message("كلمة المرور يجب أن تكون أقوى");
+}else if(error.code==="auth/invalid-email"){
+message("البريد الإلكتروني غير صحيح");
+}else{
+message("حدث خطأ: "+error.message);
+}
+
+}
+};
+
+async function getProfile(user){
+
+const directDocs=await getDocs(query(
+collection(db,"users"),
+where("email","==",user.email)
+));
+
+if(!directDocs.empty){
+
+const item=directDocs.docs[0];
+
+return{
+id:item.id,
+data:item.data()
+};
+
+}
+
+return null;
+}
+
+onAuthStateChanged(auth,async user=>{
+
+if(!user){
+showOnly(authSection);
+document.getElementById("topUser").textContent="";
+return;
+}
+
+try{
+
+const profile=await getProfile(user);
+
+if(!profile){
+
+await setDoc(doc(db,"users",user.uid),{
+name:"",
+email:user.email,
+balance:0,
+level:"beginner",
+trades:0,
+role:"student",
+is_active:true
+});
+
+currentProfileId=user.uid;
+
+showStudent({
+name:"",
+email:user.email,
+balance:0,
+level:"beginner",
+trades:0
+});
+
+return;
+}
+
+currentProfileId=profile.id;
+
+const data=profile.data;
+
+if(data.role==="admin"){
+
+showOnly(adminSection);
+document.getElementById("topUser").textContent="المدير 👑";
+await loadStudents();
+
+}else{
+
+showStudent(data);
+
+}
+
+}catch(error){
+
+message("تعذر تحميل بيانات الحساب");
+
+console.error(error);
+
+}
+
+});
+
+function showStudent(data){
+
+showOnly(studentSection);
+
+document.getElementById("topUser").textContent=data.name||data.email||"الطالب";
+
+document.getElementById("studentName").textContent=data.name||"-";
+document.getElementById("studentEmail").textContent=data.email||"-";
+document.getElementById("studentBalance").textContent=Number(data.balance)||0;
+document.getElementById("studentLevel").textContent=data.level==="beginner"?"مبتدئ":(data.level||"-");
+document.getElementById("studentTrades").textContent=Number(data.trades)||0;
+
+}
+document.getElementById("studentLogout").onclick=async()=>{
+await signOut(auth);
+};
+
+document.getElementById("adminLogout").onclick=async()=>{
+await signOut(auth);
+};
+
+document.getElementById("refreshStudents").onclick=async()=>{
+await loadStudents();
+};
 
 async function loadStudents(){
-  const snapshot = await getDocs(collection(db,"users"));
-  const table = document.getElementById("studentsTable");
 
-  table.innerHTML = "";
+const loading=document.getElementById("studentsLoading");
+const table=document.getElementById("studentsTable");
+const tableContainer=document.getElementById("studentsTableContainer");
+const noStudents=document.getElementById("noStudents");
 
-  let totalBalance = 0;
-  let count = 0;
+loading.classList.remove("hidden");
+tableContainer.classList.add("hidden");
+noStudents.classList.add("hidden");
+table.innerHTML="";
 
-  snapshot.forEach(item=>{
-    const data = item.data();
+try{
 
-    if(data.role === "admin") return;
+const snapshot=await getDocs(collection(db,"users"));
 
-    count++;
+let students=[];
+let total=0;
 
-    const balance = Number(data.balance) || 0;
-    totalBalance += balance;
+snapshot.forEach(item=>{
 
-    const row = document.createElement("tr");
+const data=item.data();
 
-    row.innerHTML = `
-      <td><input id="name-${item.id}" value="${data.name || ""}"></td>
-      <td>${data.email || ""}</td>
-      <td><input id="balance-${item.id}" type="number" value="${balance}"></td>
-      <td><input id="level-${item.id}" value="${data.level || "beginner"}"></td>
-      <td><span class="badge">طالب</span></td>
-      <td><button onclick="saveStudent('${item.id}')">حفظ</button></td>
-    `;
+if(data.role!=="admin"){
 
-    table.appendChild(row);
-  });
+students.push({
+id:item.id,
+...data
+});
 
-  document.getElementById("totalStudents").textContent = count;
-  document.getElementById("totalBalance").textContent = totalBalance;
+total+=Number(data.balance)||0;
+
 }
-<!-- السطر 139 --><!-- السطر 140 -->
-window.saveStudent = async function(id){
 
-  const name =
-    document.getElementById("name-" + id).value.trim();
+});
 
-  const balance =
-    document.getElementById("balance-" + id).value;
+document.getElementById("totalStudents").textContent=students.length;
+document.getElementById("totalBalance").textContent=total.toLocaleString();
 
-  const level =
-    document.getElementById("level-" + id).value.trim();
+if(students.length===0){
 
-  try{
+noStudents.classList.remove("hidden");
 
-    await updateDoc(
-      doc(db,"users",id),
-      {
-        name:name,
-        balance:Number(balance) || 0,
-        level:level || "beginner"
-      }
-    );
+}else{
 
-    showMessage("تم حفظ بيانات الطالب بنجاح ✅","success");
+students.forEach(student=>{
 
-    loadStudents();
+const row=document.createElement("tr");
 
-  }catch(error){
+row.innerHTML=`
+<td>
+<input id="name_${student.id}" value="${escapeHtml(student.name||"")}">
+</td>
+<td>${escapeHtml(student.email||"")}</td>
+<td>
+<input id="balance_${student.id}" type="number" value="${Number(student.balance)||0}">
+</td>
+<td>
+<input id="level_${student.id}" value="${escapeHtml(student.level||"beginner")}">
+</td>
+<td>
+<input id="trades_${student.id}" type="number" value="${Number(student.trades)||0}">
+</td>
+<td>
+<button class="btn small-btn" data-id="${student.id}">حفظ</button>
+</td>
+`;
 
-    console.error(error);
+const button=row.querySelector("button");
 
-    showMessage(
-      "حدث خطأ أثناء حفظ بيانات الطالب"
-    );
+button.onclick=()=>saveStudent(student.id);
 
-  }
+table.appendChild(row);
 
-};
+});
 
-// السطر 141
+tableContainer.classList.remove("hidden");
+
+}
+
+}catch(error){
+
+console.error(error);
+message("حدث خطأ أثناء تحميل الطلاب");
+
+}finally{
+
+loading.classList.add("hidden");
+
+}
+
+}
+
+async function saveStudent(id){
+
+const name=document.getElementById("name_"+id).value.trim();
+const balance=Number(document.getElementById("balance_"+id).value)||0;
+const level=document.getElementById("level_"+id).value.trim()||"beginner";
+const trades=Number(document.getElementById("trades_"+id).value)||0;
+
+try{
+
+await updateDoc(doc(db,"users",id),{
+name:name,
+balance:balance,
+level:level,
+trades:trades
+});
+
+message("تم حفظ بيانات الطالب بنجاح ✅","success");
+
+await loadStudents();
+
+}catch(error){
+
+console.error(error);
+message("تعذر حفظ بيانات الطالب");
+
+}
+
+}
+
+function escapeHtml(value){
+
+return String(value)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+let price=65000;
+
+setInterval(()=>{
+
+const change=(Math.random()-0.5)*100;
+price+=change;
+
+document.getElementById("btcPrice").textContent=
+price.toLocaleString(undefined,{
+minimumFractionDigits:2,
+maximumFractionDigits:2
+});
+
+},3000);
+
 </script>
-
-// السطر 142
 </body>
-
-// السطر 143
 </html>
