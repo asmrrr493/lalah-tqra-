@@ -1,626 +1,69 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>TradeLab - لوحة الأدمن</title>
-
-<style>
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#111;
-  color:white;
-  min-height:100vh;
-}
-
-/* صفحة تسجيل الدخول */
-
-.login-page{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:20px;
-}
-
-.box{
-  background:#242424;
-  padding:30px 20px;
-  border-radius:18px;
-  width:100%;
-  max-width:420px;
-  text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,.4);
-}
-
-h2{
-  margin-bottom:25px;
-}
-
-input{
-  padding:14px;
-  margin:8px 0;
-  border-radius:10px;
-  border:none;
-  width:100%;
-  font-size:16px;
-  outline:none;
-}
-
-button{
-  padding:14px;
-  margin-top:10px;
-  border-radius:10px;
-  border:none;
-  width:100%;
-  font-size:17px;
-  cursor:pointer;
-  font-weight:bold;
-  background:orange;
-  color:#111;
-}
-
-button:hover{
-  background:#ffaa00;
-}
-
-#msg{
-  margin-top:15px;
-  font-weight:bold;
-}
-
-/* لوحة الأدمن */
-
-#adminDashboard{
-  display:none;
-  min-height:100vh;
-}
-
-.header{
-  background:#1d1d1d;
-  padding:18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid #333;
-}
-
-.header h2{
-  margin:0;
-  color:orange;
-  font-size:20px;
-}
-
-.logout-btn{
-  width:auto;
-  margin:0;
-  padding:10px 18px;
-  background:#e53935;
-  color:white;
-}
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
-
-.welcome{
-  background:#242424;
-  padding:20px;
-  border-radius:15px;
-  margin-bottom:20px;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:15px;
-}
-
-.card{
-  background:#242424;
-  padding:20px;
-  border-radius:15px;
-  text-align:center;
-}
-
-.card h3{
-  margin:0 0 10px;
-  color:#aaa;
-  font-size:15px;
-}
-
-.card p{
-  margin:0;
-  font-size:24px;
-  color:orange;
-  font-weight:bold;
-}
-
-.admin-info{
-  background:#242424;
-  margin-top:20px;
-  padding:20px;
-  border-radius:15px;
-}
-
-.admin-info h3{
-  margin-top:0;
-  color:orange;
-}
-
-@media(max-width:600px){
-
-  .header h2{
-    font-size:16px;
-  }
-
-  .container{
-    padding:15px;
-  }
-
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم Tigo</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 30px; background: #111; color: white; }
+    .box { background: #222; padding: 20px; border-radius: 10px; max-width: 400px; margin: auto; }
+    input, button { padding: 12px; margin: 8px; border-radius: 8px; border: none; width: 80%; font-size: 16px; }
+    button { background: orange; color: black; cursor: pointer; font-weight: bold; }
+    #msg { margin-top: 15px; font-weight: bold; white-space: pre-line; }
+  </style>
 </head>
-
 <body>
-
-<!-- صفحة تسجيل الدخول -->
-
-<div id="loginPage" class="login-page">
-
   <div class="box">
-
-    <h2>🔐 تسجيل دخول الأدمن</h2>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="البريد الإلكتروني"
-    >
-
-    <input
-      id="password"
-      type="password"
-      placeholder="كلمة المرور"
-    >
-
-    <button id="login">
-      دخول
-    </button>
-
+    <h2>تسجيل دخول الادمن</h2>
+    <input id="email" type="email" placeholder="admin@tigo.com" value="admin@tigo.com"><br>
+    <input id="password" type="password" placeholder="123456" value="123456"><br>
+    <button id="login">دخول</button>
     <p id="msg"></p>
-
   </div>
-
-</div>
-
-
-<!-- لوحة الأدمن -->
-
-<div id="adminDashboard">
-
-  <div class="header">
-
-    <h2>👑 TradeLab - لوحة تحكم الأدمن</h2>
-
-    <button id="logout" class="logout-btn">
-      تسجيل الخروج
-    </button>
-
-  </div>
-
-
-  <div class="container">
-
-    <div class="welcome">
-
-      <h2>
-        أهلاً <span id="adminName"></span> 👋
-      </h2>
-
-      <p>
-        مرحباً بك في لوحة التحكم الرئيسية
-      </p>
-
-    </div>
-
-
-    <div class="cards">
-
-      <div class="card">
-
-        <h3>💰 الرصيد</h3>
-
-        <p id="adminBalance">0</p>
-
-      </div>
-
-
-      <div class="card">
-
-        <h3>📊 المستوى</h3>
-
-        <p id="adminLevel">1</p>
-
-      </div>
-
-
-      <div class="card">
-
-        <h3>📈 الصفقات</h3>
-
-        <p id="adminTrades">0</p>
-
-      </div>
-
-    </div>
-
-
-    <div class="admin-info">
-
-      <h3>⚙️ معلومات الحساب</h3>
-
-      <p>
-        البريد الإلكتروني:
-        <span id="adminEmail"></span>
-      </p>
-
-      <p>
-        الصلاحية:
-        <span id="adminRole"></span>
-      </p>
-
-    </div>
-
-  </div>
-
-</div>
-
 
 <script type="module">
-
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-import {
-  getFirestore,
-  doc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-
-
-/* بيانات Firebase */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
-
   apiKey: "AIzaSyBFpcNjyPK1oY4AB23WcEUGIA4qRMvHzCs",
-
   authDomain: "bitcoin-d70e1.firebaseapp.com",
-
   projectId: "bitcoin-d70e1",
-
   storageBucket: "bitcoin-d70e1.firebasestorage.app",
-
   messagingSenderId: "1038875440816",
-
   appId: "1:1038875440816:web:1f70ae886bb792b8b4ed75"
-
 };
-
-
-/* تشغيل Firebase */
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
-
 const db = getFirestore(app);
 
-
-/* العناصر */
-
-const loginPage =
-document.getElementById("loginPage");
-
-const adminDashboard =
-document.getElementById("adminDashboard");
-
-const loginBtn =
-document.getElementById("login");
-
-const logoutBtn =
-document.getElementById("logout");
-
-const msg =
-document.getElementById("msg");
-
-
-/* تحميل بيانات الأدمن */
-
-async function loadAdmin(user){
-
-  try{
-
-    console.log("UID الحالي:", user.uid);
-    console.log("Email الحالي:", user.email);
-
-    const userDoc = await getDoc(
-      doc(db, "users", user.uid)
-    );
-
-    console.log(
-      "هل الوثيقة موجودة؟",
-      userDoc.exists()
-    );
-
-
-    if(userDoc.exists()){
-
-      console.log(
-        "بيانات Firestore:",
-        userDoc.data()
-      );
-
-
-      if(userDoc.data().role === "admin"){
-
-        const data = userDoc.data();
-
-
-        document.getElementById(
-          "adminName"
-        ).innerText =
-        data.name || "admin";
-
-
-        document.getElementById(
-          "adminBalance"
-        ).innerText =
-        data.balance || 0;
-
-
-        document.getElementById(
-          "adminLevel"
-        ).innerText =
-        data.level || 1;
-
-
-        document.getElementById(
-          "adminTrades"
-        ).innerText =
-        data.trades || 0;
-
-
-        document.getElementById(
-          "adminEmail"
-        ).innerText =
-        user.email;
-
-
-        document.getElementById(
-          "adminRole"
-        ).innerText =
-        data.role;
-
-
-        loginPage.style.display =
-        "none";
-
-
-        adminDashboard.style.display =
-        "block";
-
-
-      }else{
-
-
-        alert(
-          "الحساب موجود لكن الصلاحية ليست admin.\n\nالصلاحية الحالية: " +
-          userDoc.data().role
-        );
-
-
-        await signOut(auth);
-
-
-      }
-
-
-    }else{
-
-
-      alert(
-        "لم يتم العثور على بيانات هذا المستخدم في Firestore.\n\nUID:\n" +
-        user.uid
-      );
-
-
-      await signOut(auth);
-
-
+document.getElementById('login').onclick = async () => {
+  const email = document.getElementById('email').value;
+  const pass = document.getElementById('password').value;
+  const msg = document.getElementById('msg');
+  msg.innerText = "جاري التحقق...";
+  msg.style.color = "orange";
+  try {
+    const userCred = await signInWithEmailAndPassword(auth, email, pass);
+    msg.innerText = "1- تم تسجيل الدخول ✅\nUID: " + userCred.user.uid;
+    
+    const userDoc = await getDoc(doc(db, "users", userCred.user.uid));
+    if(userDoc.exists()) {
+      msg.innerText += "\n2- لقيت البيانات في Firestore ✅";
+      msg.innerText += "\nالاسم: " + userDoc.data().name;
+      msg.style.color = "lightgreen";
+    } else {
+      msg.innerText += "\n2- مش لاقي البيانات في Firestore ❌";
+      msg.innerText += "\nروح Firestore واعمل document باسمه ده";
+      msg.style.color = "red";
     }
-
-
-  }catch(error){
-
-
-    console.error(
-      "خطأ كامل:",
-      error
-    );
-
-
-    alert(
-      "حدث خطأ:\n\n" +
-      error.message
-    );
-
-
+  } catch(e){ 
+    msg.innerText = "خطأ: " + e.message;
+    msg.style.color = "red";
   }
-
 }
-
-
-/* تسجيل الدخول */
-
-loginBtn.onclick =
-async ()=>{
-
-
-  const email =
-  document.getElementById(
-    "email"
-  ).value.trim();
-
-
-  const password =
-  document.getElementById(
-    "password"
-  ).value;
-
-
-  if(!email || !password){
-
-    msg.innerText =
-    "أدخل البريد وكلمة المرور";
-
-    msg.style.color =
-    "red";
-
-    return;
-
-  }
-
-
-  msg.innerText =
-  "جاري الدخول...";
-
-
-  msg.style.color =
-  "orange";
-
-
-  loginBtn.disabled =
-  true;
-
-
-  try{
-
-
-    const userCredential =
-    await signInWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-
-
-    await loadAdmin(
-      userCredential.user
-    );
-
-
-  }catch(error){
-
-
-    console.error(
-      "خطأ تسجيل الدخول:",
-      error
-    );
-
-
-    msg.innerText =
-    "خطأ في البريد أو كلمة المرور ❌";
-
-
-    msg.style.color =
-    "red";
-
-
-  }
-
-
-  loginBtn.disabled =
-  false;
-
-
-  loginBtn.innerText =
-  "دخول";
-
-};
-
-
-/* مراقبة تسجيل الدخول */
-
-onAuthStateChanged(
-  auth,
-  async(user)=>{
-
-
-    if(user){
-
-      await loadAdmin(user);
-
-    }
-
-  }
-);
-
-
-/* تسجيل الخروج */
-
-logoutBtn.onclick =
-async ()=>{
-
-
-  await signOut(auth);
-
-
-  adminDashboard.style.display =
-  "none";
-
-
-  loginPage.style.display =
-  "flex";
-
-
-  document.getElementById(
-    "email"
-  ).value =
-  "";
-
-
-  document.getElementById(
-    "password"
-  ).value =
-  "";
-
-
-  msg.innerText =
-  "";
-
-};
-
 </script>
-
 </body>
 </html>
