@@ -172,7 +172,7 @@ button:hover{
 
 <body>
 
-<!-- تسجيل الدخول -->
+<!-- صفحة تسجيل الدخول -->
 
 <div id="loginPage" class="login-page">
 
@@ -236,20 +236,29 @@ button:hover{
     <div class="cards">
 
       <div class="card">
+
         <h3>💰 الرصيد</h3>
+
         <p id="adminBalance">0</p>
+
       </div>
 
 
       <div class="card">
+
         <h3>📊 المستوى</h3>
+
         <p id="adminLevel">1</p>
+
       </div>
 
 
       <div class="card">
+
         <h3>📈 الصفقات</h3>
+
         <p id="adminTrades">0</p>
+
       </div>
 
     </div>
@@ -299,7 +308,7 @@ import {
 
 
 
-/* Firebase Config */
+/* بيانات Firebase */
 
 const firebaseConfig = {
 
@@ -318,7 +327,6 @@ const firebaseConfig = {
 };
 
 
-
 /* تشغيل Firebase */
 
 const app = initializeApp(firebaseConfig);
@@ -326,7 +334,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const db = getFirestore(app);
-
 
 
 /* العناصر */
@@ -347,102 +354,130 @@ const msg =
 document.getElementById("msg");
 
 
-
 /* تحميل بيانات الأدمن */
 
 async function loadAdmin(user){
 
   try{
 
-    const userDoc =
-    await getDoc(
-      doc(db,"users",user.uid)
+    console.log("UID الحالي:", user.uid);
+    console.log("Email الحالي:", user.email);
+
+    const userDoc = await getDoc(
+      doc(db, "users", user.uid)
+    );
+
+    console.log(
+      "هل الوثيقة موجودة؟",
+      userDoc.exists()
     );
 
 
-    if(
-      userDoc.exists() &&
-      userDoc.data().role === "admin"
-    ){
+    if(userDoc.exists()){
 
-      const data =
-      userDoc.data();
-
-
-      document.getElementById(
-        "adminName"
-      ).innerText =
-      data.name || "Admin";
+      console.log(
+        "بيانات Firestore:",
+        userDoc.data()
+      );
 
 
-      document.getElementById(
-        "adminBalance"
-      ).innerText =
-      data.balance || 0;
+      if(userDoc.data().role === "admin"){
+
+        const data = userDoc.data();
 
 
-      document.getElementById(
-        "adminLevel"
-      ).innerText =
-      data.level || 1;
+        document.getElementById(
+          "adminName"
+        ).innerText =
+        data.name || "Admin";
 
 
-      document.getElementById(
-        "adminTrades"
-      ).innerText =
-      data.trades || 0;
+        document.getElementById(
+          "adminBalance"
+        ).innerText =
+        data.balance || 0;
 
 
-      document.getElementById(
-        "adminEmail"
-      ).innerText =
-      user.email;
+        document.getElementById(
+          "adminLevel"
+        ).innerText =
+        data.level || 1;
 
 
-      document.getElementById(
-        "adminRole"
-      ).innerText =
-      data.role;
+        document.getElementById(
+          "adminTrades"
+        ).innerText =
+        data.trades || 0;
 
 
-      loginPage.style.display =
-      "none";
+        document.getElementById(
+          "adminEmail"
+        ).innerText =
+        user.email;
 
 
-      adminDashboard.style.display =
-      "block";
+        document.getElementById(
+          "adminRole"
+        ).innerText =
+        data.role;
+
+
+        loginPage.style.display =
+        "none";
+
+
+        adminDashboard.style.display =
+        "block";
+
+
+      }else{
+
+
+        alert(
+          "الحساب موجود لكن الصلاحية ليست admin.\n\nالصلاحية الحالية: " +
+          userDoc.data().role
+        );
+
+
+        await signOut(auth);
+
+
+      }
 
 
     }else{
 
-      msg.innerText =
-      "هذا الحساب ليس أدمن ❌";
 
-
-      msg.style.color =
-      "red";
+      alert(
+        "لم يتم العثور على بيانات هذا المستخدم في Firestore.\n\nUID:\n" +
+        user.uid
+      );
 
 
       await signOut(auth);
+
 
     }
 
 
   }catch(error){
 
-    console.error(error);
 
-    msg.innerText =
-    "حدث خطأ في تحميل بيانات الأدمن";
+    console.error(
+      "خطأ كامل:",
+      error
+    );
 
 
-    msg.style.color =
-    "red";
+    alert(
+      "حدث خطأ:\n\n" +
+      error.message
+    );
+
 
   }
 
 }
-
 
 
 /* تسجيل الدخول */
@@ -476,8 +511,12 @@ async ()=>{
   }
 
 
-  loginBtn.innerText =
+  msg.innerText =
   "جاري الدخول...";
+
+
+  msg.style.color =
+  "orange";
 
 
   loginBtn.disabled =
@@ -503,7 +542,10 @@ async ()=>{
   }catch(error){
 
 
-    console.error(error);
+    console.error(
+      "خطأ تسجيل الدخول:",
+      error
+    );
 
 
     msg.innerText =
@@ -517,15 +559,14 @@ async ()=>{
   }
 
 
-  loginBtn.innerText =
-  "دخول";
-
-
   loginBtn.disabled =
   false;
 
-};
 
+  loginBtn.innerText =
+  "دخول";
+
+};
 
 
 /* مراقبة تسجيل الدخول */
@@ -543,7 +584,6 @@ onAuthStateChanged(
 
   }
 );
-
 
 
 /* تسجيل الخروج */
